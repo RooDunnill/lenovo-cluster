@@ -65,3 +65,4 @@ iface $INT_GATEWAY inet static
 echo "$TEXT" > "$NET_INT"
 
 echo "$NET_INT correctly configured to set the static ip $IP_STATIC with gateway ip $IP_GATEWAY for interface $INT_GATEWAY"
+systemctl restart networking     #instantly restarts the network to reflect the new ip address

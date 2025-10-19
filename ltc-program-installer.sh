@@ -40,6 +40,8 @@ PACKAGES=(                #the list of packages to install
     python3-pip                  #python repo library
     python3-venv                 #python virtual environments
     nmap                         #network scanner
+    dropbear                     #used for sshing in before drive passphrase
+    dropbear-initramfs
 )
 
 for pkg in "${PACKAGES[@]}"; do                   #goes through each package in PACKAGES

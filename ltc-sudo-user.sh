@@ -2,7 +2,12 @@
 set -e #exits if an error is encountered
 
 if ! command -v sudo >/dev/null 2>&1; then                             #checks sudo is installed
-    echo "sudo is not installed, please install and rerun script"
+    echo "sudo is not installed, attempting to install"
+    su -c "apt install -y sudo"
+    if ! command -v sudo >/dev/null 2>&1; then 
+        echo "Still can't install it, ending program"
+        exit 1
+    fi
 fi
 
 
