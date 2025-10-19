@@ -37,5 +37,5 @@ else
 fi
 
 echo "Static IP $IP_STATIC has been set for $HOSTNAME"
-cat /etc/initramfs-tools.initramfs.conf
+cat /etc/initramfs-tools/initramfs.conf
 cat /etc/default/grub
