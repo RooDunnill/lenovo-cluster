@@ -3,14 +3,14 @@ set -e
 
 if [[ $EUID -ne 0 ]]; then                  #checks the user has run the file as root
     echo "Must have root access to run"
-    false
+    exit 1
 fi
 
 if ping -c 1 -W 2 8.8.8.8 >/dev/null 2>&1; then
     echo "Internet connected"
 else
     echo "No internet"
-    false
+    exit 1
 fi
 echo "Updating the package list"
 apt update                #updates the system

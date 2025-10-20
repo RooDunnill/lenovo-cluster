@@ -3,7 +3,7 @@ set -e
 
 if [[ $EUID -ne 0 ]]; then                  #checks that the user has run the file as root
     echo "Must have root access to run"
-    false
+    exit 1
 fi
 
 IFACE="eth0"
