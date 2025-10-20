@@ -42,6 +42,7 @@ PACKAGES=(                #the list of packages to install
     nmap                         #network scanner
     dropbear                     #used for sshing in before drive passphrase
     dropbear-initramfs
+    lshw                         #system specs
 )
 
 for pkg in "${PACKAGES[@]}"; do                   #goes through each package in PACKAGES
