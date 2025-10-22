@@ -35,3 +35,10 @@ The 10 ltc nodes are configured with the help of ansible to mass run commands an
 * Wireguard into my node setup from my laptop for external network access
 ## Current Hosted Programs
 * Obligitory Minecraft server
+## Ansible Commands
+As my setup has ansible.cfg pointing to my inventory file, which i only need one of, I don't need to specify the path
+* ansible [group] -m ping
+Pings every server in that given group, allowing for an easy way to check the connections
+* ansible [group] -m shell -a "command"
+Allows you to run a shell command on all servers
+* ansible [group] -m copy -a "src=/path/to/src dest=/path/to/dest"
