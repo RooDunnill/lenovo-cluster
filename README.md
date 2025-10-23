@@ -14,9 +14,9 @@ These 10 computers are currently all set up at my home and are connected to a ne
 #### Central Node Specifications
 * CPU: Ryzen 5 5600X
 * RAM: 32GB DDR4 3200Mhz DIMM
-* Storage: 1TB NVME M.2 Gen 4
+* STORAGE: 1TB NVME M.2 Gen 4
 * GPU: Nvidia 3060Ti
-* Networking: Gigabit Ethernet
+* NETWORKING: Gigabit Ethernet
 * OS: Debian Trixie
 
 The 10 ltc nodes are configured with the help of ansible to mass run commands and shell scripts on all of the devices and are LUKS encrypted. I used dropbear ssh to install a lightweight ssh server into the initramfs, so that I can unlock the LUKS drives remotely.
@@ -35,10 +35,28 @@ The 10 ltc nodes are configured with the help of ansible to mass run commands an
 * Wireguard into my node setup from my laptop for external network access
 ## Current Hosted Programs
 * Obligitory Minecraft server
-## Ansible Commands
+## Useful Commands
+### Ansible Commands
 As my setup has ansible.cfg pointing to my inventory file, which i only need one of, I don't need to specify the path
 * ansible [group] -m ping
+
 Pings every server in that given group, allowing for an easy way to check the connections
 * ansible [group] -m shell -a "command"
+
 Allows you to run a shell command on all servers
 * ansible [group] -m copy -a "src=/path/to/src dest=/path/to/dest"
+
+Copies files over, great for batch moving config files
+### Lightweight Kubernetes (k3s) Commands
+#### Main server commands
+* $ curl -sfL https://get.k3s.io | sh –
+
+This runs on the main master computer and installs all necessary packages
+* $ sudo k3s kubectl get nodes
+
+Shows all of the connected servers in a really neat and succinct fashion.
+#### Node Commands
+* curl -sfL https://get.k3s.io | K3S_URL=https://myserver:6443 K3S_TOKEN=mynodetoken sh -
+
+Installs the necessary software, pairs nicely with ansible
+
