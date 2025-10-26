@@ -45,7 +45,7 @@ PrivateKey = /etc/wireguard/keys/cluster-privatekey
 Address = $TUNNEL_IP
 
 [Peer]
-PublicKey = /etc/wireguard/keys/cluster-publickey
+PublicKey = /etc/wireguard/keys/server-pub-key
 Endpoint = home.ddns.serendipitous-squirrel.com:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 25
