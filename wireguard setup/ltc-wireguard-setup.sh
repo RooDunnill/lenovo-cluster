@@ -40,7 +40,7 @@ chmod 644 /etc/wireguard/keys/cluster-publickey                #locks the editti
 echo "Creating config file"
 touch /etc/wireguard/wg-cluster.conf
    
-PUB_KEY=$(cat /etc/wireguard/keys/server-pub-key)
+PUB_KEY="LZyeVvek1jQeDK032qFspzXfFijgjRmlE/UAh1g7KAQ="
 PRIV_KEY=$(cat /etc/wireguard/keys/cluster-privatekey)
 
 cat <<EOF > /etc/wireguard/wg-cluster.conf                     #adds the contents below to the wireguard config file
