@@ -20,21 +20,28 @@ These 10 computers are currently all set up at my home and are connected to a ne
 * OS: Debian Trixie
 
 The 10 ltc nodes are configured with the help of ansible to mass run commands and shell scripts on all of the devices and are LUKS encrypted. I used dropbear ssh to install a lightweight ssh server into the initramfs, so that I can unlock the LUKS drives remotely.
+## Current Progress
+* So far I have set up ansible to automate batch scripting to the 10 servers
+* I have then installed k3s and configured it
+* I bought a DDNS service and domain name from cloudflare which now allows for my central node to provide a stable service
+* My central node runs a wireguard server that uses the domain name to provide access to the home network from anywhere
+* The central node is the central point and currently the spoke of the wheel, if it goes down, everything will follow with it. To connect to the servers remotely, i can ssh into the central node and then run commands from there on all of the devices
 ## Aims
 * Practice good security practices
 * Learn about distributed computing
 * Learn about mesh networking across various private networks
 * Practice hands on encryption
 * Learn other programming languages and improve coding skills
+* Make a blog of my experience
 ## Tasks
 * Set up computers at my university
 * Spread the computers around families and friends houses
 * Practice writing and hosting small websites and chatrooms
-* Set up a DDNS server on main node
 * Use k3s to distribute tasks
 * Wireguard into my node setup from my laptop for external network access
 ## Current Hosted Programs
 * Obligitory Minecraft server
+* Wireguard Server
 ## Useful Commands
 ### Ansible Commands
 As my setup has ansible.cfg pointing to my inventory file, which i only need one of, I don't need to specify the path
