@@ -18,6 +18,7 @@ if ! command -v wg >/dev/null 2>&1; then                       #checks wireguard
     fi
 fi
 
+
 HOSTNAME=$(hostname)
 ID=$(echo "$HOSTNAME" | tail -c 3 | head -c 2)                 #finds the last two digits of the hostname
 TUNNEL_IP=10.0.0.1${ID}/24
@@ -39,13 +40,16 @@ chmod 644 /etc/wireguard/keys/cluster-publickey                #locks the editti
 echo "Creating config file"
 touch /etc/wireguard/wg-cluster.conf
    
+PUB_KEY=$(cat /etc/wireguard/keys/server-pub-key)
+PRIV_KEY=$(cat /etc/wireguard/keys/cluster-privatekey)
+
 cat <<EOF > /etc/wireguard/wg-cluster.conf                     #adds the contents below to the wireguard config file
 [Interface]
-PrivateKey = /etc/wireguard/keys/cluster-privatekey
+PrivateKey = $PRIV_KEY
 Address = $TUNNEL_IP
 
 [Peer]
-PublicKey = /etc/wireguard/keys/server-pub-key
+PublicKey = $PUB_KEY
 Endpoint = home.ddns.serendipitous-squirrel.com:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 25
