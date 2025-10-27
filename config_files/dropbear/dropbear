@@ -1,7 +1,7 @@
 # This is located in /etc/default/dropbear
 # The TCP port that Dropbear listens on
 DROPBEAR_PORT=2222
-
+DROPBEAR_BANNER="/etc/dropbear/dropbear_banner"
 # Receive window size - this is a tradeoff between memory and network performance
 #DROPBEAR_RECEIVE_WINDOW=65536
 
