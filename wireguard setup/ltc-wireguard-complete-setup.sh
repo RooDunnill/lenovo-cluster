@@ -67,7 +67,7 @@ EOF
 
     # copies the file over
     echo "Copying config file to node $i"
-    if ! scp $tmpdir/client_config_$i.conf cluster@192.168.0.$((100+$i)):/tmp/wg-cluster-unlock.conf; then
+    if ! scp -q $tmpdir/client_config_$i.conf cluster@192.168.0.$((100+$i)):/tmp/wg-cluster-unlock.conf; then
         echo "Failed to copy client $i config file across"
         exit 1
     fi
@@ -78,7 +78,7 @@ done
 
 # copies server config file to main node
 echo "Copying config file to main node"
-scp $tmpdir/server_config.conf celebrimbor@192.168.0.100:/tmp/wg-cluster-unlock.conf 
+scp -q $tmpdir/server_config.conf celebrimbor@192.168.0.100:/tmp/wg-cluster-unlock.conf 
 
 # security checks
 echo "Cleaning up temporary files"
@@ -87,7 +87,7 @@ unset server_pub_key
 unset server_priv_key
 
 # move files with ansible
-source /home/user/Documents/ansible/bin/activate
+source /home/user/Documents/venvs/ansible/bin/activate
 ansible allhosts -m shell -a "sudo mv /tmp/wg-cluster-unlock.conf /etc/wireguard/wg-cluster-unlock.conf" --become -K
 ansible allhosts -m shell -a "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf" --become -K
 
