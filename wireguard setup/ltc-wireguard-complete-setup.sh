@@ -46,7 +46,7 @@ for i in $(seq 1 "$key_num"); do
     cat << EOF >> "$tmpdir/server_config.conf"
 [Peer]
 PublicKey = $client_pub_key
-AllowedIps = 10.0.0.$((200+i))/32
+AllowedIPs = 10.0.0.$((200+i))/32
 
 EOF
 
