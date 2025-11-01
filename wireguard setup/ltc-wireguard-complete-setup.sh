@@ -83,8 +83,6 @@ scp $tmpdir/server_config.conf celebrimbor@192.168.0.100:/tmp/wg-cluster-unlock.
 # security checks
 echo "Cleaning up temporary files"
 rm -rf $tmpdir
-eval "$server_pub_key=key"
-eval "$server_priv_key=key"
 unset server_pub_key
 unset server_priv_key
 
