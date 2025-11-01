@@ -2,9 +2,9 @@
 set -e
 
 # Creating a secure environment
-tmpdir=$(sudo mktemp -d /tmp/wireguard.XXXXXX)
-sudo chmod 700 $tmpdir
-sudo chown user:users $tmpdir
+tmpdir=$(mktemp -d $HOME/wireguard.XXXXXX)
+chmod 700 $tmpdir
+chown user:users $tmpdir
 trap "rm -rf $tmpdir" EXIT
 
 # checks that wireguard is installed
@@ -43,21 +43,21 @@ for i in $(seq 1 "$key_num"); do
     eval "client_pub_key$i=\$(echo \${client_priv_keys$i} | wg pubkey)"
 
     # adds the peer to the server config file
-    echo "Appending client setup $((i+1)) to server config"
+    echo "Appending client setup $i to server config"
     cat << EOF >> "$tmpdir/server_config.conf"
 [Peer]
 PublicKey = $client_pub_key$i
-AllowedIps = 10.0.0.$((200+i+1))/32
+AllowedIps = 10.0.0.$((200+i))/32
 
 EOF
 
     # creates the client config file
-    echo "Creating client $((i+1)) config file"
-    touch $tmpdir/client_config_$((i+1)).conf
-    cat << EOF > "$tmpdir/client_config_$((i+1)).conf"
+    echo "Creating client $i config file"
+    touch $tmpdir/client_config_$i.conf
+    cat << EOF > "$tmpdir/client_config_$i.conf"
 [Interface]
 PrivateKey = $client_priv_key$i
-Address = 10.0.0.$((200+i+1))/32
+Address = 10.0.0.$((200+i))/32
 
 [Peer]
 PublicKey = $server_pub_key
@@ -67,13 +67,12 @@ PersistentKeepAlive = 25
 EOF
 
     # copies the file over
-    echo "Copying config file to node $((i+1))"
-    if ! sudo -u user scp $tmpdir/client_config_$((i+1)).conf cluster@192.168.0.$((100+$i+1)):/tmp/wg-cluster-unlock.conf; then
-        echo "Failed to copy client $((i+1)) config file across"
+    echo "Copying config file to node $i"
+    if ! scp $tmpdir/client_config_$i.conf cluster@192.168.0.$((100+$i)):/tmp/wg-cluster-unlock.conf; then
+        echo "Failed to copy client $i config file across"
         exit 1
     fi
 
-    sudo -u user ssh cluster@192.168.0.$((100+$i+1)) "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf"
     eval "$client_pub_key$i=key"
     eval "$client_priv_key$i=key"
     unset client_pub_key$i
@@ -82,8 +81,7 @@ done
 
 # copies server config file to main node
 echo "Copying config file to main node"
-sudo -u user scp $tmpdir/server_config.conf celebrimbor@192.168.0.100:/tmp/wg-cluster-unlock.conf 
-sudo -u user ssh celebrimbor@192.168.0.100 "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf"
+scp $tmpdir/server_config.conf celebrimbor@192.168.0.100:/tmp/wg-cluster-unlock.conf 
 
 # security checks
 echo "Cleaning up temporary files"
@@ -96,6 +94,7 @@ unset server_priv_key
 # move files with ansible
 source /home/user/Documents/ansible/bin/activate
 ansible allhosts -m shell -a "sudo mv /tmp/wg-cluster-unlock.conf /etc/wireguard/wg-cluster-unlock.conf" --become -K
+ansible allhosts -m shell -a "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf" --become -K
 
 
 echo "Complete!"
