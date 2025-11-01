@@ -68,7 +68,7 @@ EOF
 
     # copies the file over
     echo "Copying config file to node $((i+1))"
-    if ! sudo -u user scp $tmpdir/client_config_$i.conf cluster@192.168.0.$((100+$i+1)):/tmp/wg-cluster-unlock.conf; then
+    if ! sudo -u user scp $tmpdir/client_config_$((i+1)).conf cluster@192.168.0.$((100+$i+1)):/tmp/wg-cluster-unlock.conf; then
         echo "Failed to copy client $((i+1)) config file across"
         exit 1
     fi
