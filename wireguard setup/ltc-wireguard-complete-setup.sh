@@ -4,7 +4,6 @@ set -e
 # Creating a secure environment
 tmpdir=$(mktemp -d $HOME/wireguard.XXXXXX)
 chmod 700 $tmpdir
-chown user:users $tmpdir
 trap "rm -rf $tmpdir" EXIT
 
 # checks that wireguard is installed
