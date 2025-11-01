@@ -38,14 +38,14 @@ EOF
 # generate the client keys
 echo "Generating the client key pairs"
 for i in $(seq 1 "$key_num"); do
-    eval "client_priv_keys$i=\$(wg genkey)"
-    eval "client_pub_key$i=\$(echo \${client_priv_keys$i} | wg pubkey)"
+    client_priv_key=$(wg genkey)
+    client_pub_key=$(echo "$client_priv_key" | wg pubkey)
 
     # adds the peer to the server config file
     echo "Appending client setup $i to server config"
     cat << EOF >> "$tmpdir/server_config.conf"
 [Peer]
-PublicKey = $client_pub_key$i
+PublicKey = $client_pub_key
 AllowedIps = 10.0.0.$((200+i))/32
 
 EOF
@@ -55,7 +55,7 @@ EOF
     touch $tmpdir/client_config_$i.conf
     cat << EOF > "$tmpdir/client_config_$i.conf"
 [Interface]
-PrivateKey = $client_priv_key$i
+PrivateKey = $client_priv_key
 Address = 10.0.0.$((200+i))/32
 
 [Peer]
@@ -72,8 +72,8 @@ EOF
         exit 1
     fi
 
-    unset client_pub_key$i
-    unset client_priv_key$i
+    unset client_pub_key
+    unset client_priv_key
 done
 
 # copies server config file to main node
