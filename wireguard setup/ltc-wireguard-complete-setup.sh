@@ -11,7 +11,6 @@ echo "Root access has been confirmed"
 
 # Creating a secure environment
 tmpdir=$(mktemp -d /tmp/wireguard.XXXXXX)
-chmod 700 "$tmpdir"
 trap "rm -rf $tmpdir" EXIT
 
 # checks that wireguard is installed
