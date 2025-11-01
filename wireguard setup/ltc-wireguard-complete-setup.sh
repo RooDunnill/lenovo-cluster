@@ -67,7 +67,7 @@ EOF
 
     # copies the file over
     echo "Copying config file to node $i"
-    if ! scp -q $tmpdir/client_config_$i.conf cluster@192.168.0.$((100+$i)):/tmp/wg-cluster-unlock.conf; then
+    if ! scp -q $tmpdir/client_config_$i.conf cluster@192.168.0.$((100+$i)):/tmp/wg-unlock-cluster.conf; then
         echo "Failed to copy client $i config file across"
         exit 1
     fi
@@ -78,7 +78,7 @@ done
 
 # copies server config file to main node
 echo "Copying config file to main node"
-scp -q $tmpdir/server_config.conf celebrimbor@192.168.0.100:/tmp/wg-cluster-unlock.conf 
+scp -q $tmpdir/server_config.conf celebrimbor@192.168.0.100:/tmp/wg-unlock-cluster.conf
 
 # security checks
 echo "Cleaning up temporary files"
@@ -89,15 +89,15 @@ unset server_priv_key
 # move files with ansible
 source /home/user/Documents/venvs/ansible/bin/activate
 echo "Running ansible to move files to /etc/wireguard"
-ansible nodesubgroup -m shell -a "sudo mv /tmp/wg-cluster-unlock.conf /etc/wireguard/wg-cluster-unlock.conf" --become -K
+ansible nodesubgroup -m shell -a "sudo mv /tmp/wg-unlock-cluster.conf /etc/wireguard/wg-unlock-cluster.conf" --become -K
 echo "Running ansible to change file perms"
-ansible nodesubgroup -m shell -a "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf && sudo chown root:root /etc/wireguard/wg-cluster-unlock.conf" --become -K
+ansible nodesubgroup -m shell -a "sudo chmod 600 /etc/wireguard/wg-unlock-cluster.conf && sudo chown root:root /etc/wireguard/wg-unlock-cluster.conf" --become -K
 
 
 # become passwords are different and haven't configured correctly yet so must be done seperately (will remove later)
 echo "Running ansible to move files to /etc/wireguard"
-ansible 192.168.0.100 -m shell -a "sudo mv /tmp/wg-cluster-unlock.conf /etc/wireguard/wg-cluster-unlock.conf" --become -K
+ansible 192.168.0.100 -m shell -a "sudo mv /tmp/wg-unlock-cluster.conf /etc/wireguard/wg-unlock-cluster.conf" --become -K
 echo "Running ansible to change file perms"
-ansible 192.168.0.100 -m shell -a "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf && sudo chown root:root /etc/wireguard/wg-cluster-unlock.conf" --become -K
+ansible 192.168.0.100 -m shell -a "sudo chmod 600 /etc/wireguard/wg-unlock-cluster.conf && sudo chown root:root /etc/wireguard/wg-unlock-cluster.conf" --become -K
 
 echo "Complete!"
