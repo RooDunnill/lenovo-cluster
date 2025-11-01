@@ -101,8 +101,8 @@ echo "Running ansible to change file perms"
 ansible 192.168.0.100 -m shell -a "sudo chmod 600 /etc/wireguard/wg-unlock-cluster-temp.conf && sudo chown root:root /etc/wireguard/wg-unlock-cluster-temp.conf" --become -K
 
 # I have no reason why this doesn't work so i am just going to get ansible to copy the files and delete the old one????
-ansible nodesubgroup -m shell -a "sudo cp /etc/wireguard/wg-unlock-cluster-temp.conf /etc/wireguard/wg-unlock-cluster.conf
- && sudo rm /etc/wireguard/wg-unlock-cluster-temp.conf" --become -K
- ansible 192.168.0.100 -m shell -a "sudo cp /etc/wireguard/wg-unlock-cluster-temp.conf /etc/wireguard/wg-unlock-cluster.conf
- && sudo rm /etc/wireguard/wg-unlock-cluster-temp.conf" --become -K
+ansible nodesubgroup -m shell -a "sudo cp /etc/wireguard/wg-unlock-cluster-temp.conf /etc/wireguard/wg-unlock-cluster.conf" --become -K
+ansible nodesubgroup -m shell -a "sudo rm /etc/wireguard/wg-unlock-cluster-temp.conf" --become -K
+ansible 192.168.0.100 -m shell -a "sudo cp /etc/wireguard/wg-unlock-cluster-temp.conf /etc/wireguard/wg-unlock-cluster.conf" --become -K
+ansible 192.168.0.100 -m shell -a "sudo rm /etc/wireguard/wg-unlock-cluster-temp.conf" --become -K
 echo "Complete!"
