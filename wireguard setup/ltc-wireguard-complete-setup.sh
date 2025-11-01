@@ -88,11 +88,15 @@ unset server_priv_key
 
 # move files with ansible
 source /home/user/Documents/venvs/ansible/bin/activate
+echo "Running ansible to move files to /etc/wireguard"
 ansible nodesubgroup -m shell -a "sudo mv /tmp/wg-cluster-unlock.conf /etc/wireguard/wg-cluster-unlock.conf" --become -K
+echo "Running ansible to change file perms"
 ansible nodesubgroup -m shell -a "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf" --become -K
 
 # become passwords are different and haven't configured correctly yet so must be done seperately (will remove later)
+echo "Running ansible to move files to /etc/wireguard"
 ansible 192.168.0.100 -m shell -a "sudo mv /tmp/wg-cluster-unlock.conf /etc/wireguard/wg-cluster-unlock.conf" --become -K
+echo "Running ansible to change file perms"
 ansible 192.168.0.100 -m shell -a "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf" --become -K
 
 echo "Complete!"
