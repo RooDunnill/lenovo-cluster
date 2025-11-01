@@ -74,11 +74,11 @@ PersistentKeepAlive = 25
 EOF
     # copies the file over
     echo "Copying config file to node $((i+1))"
-    if ! scp $tmpdir/client_config_$i.conf cluster@192.168.0.$((100+$i+1)):/etc/wireguard/wg-cluster-unlock.conf; then
+    if ! sudo -u user scp $tmpdir/client_config_$i.conf cluster@192.168.0.$((100+$i+1)):/etc/wireguard/wg-cluster-unlock.conf; then
         echo "Failed to copy client $((i+1)) config file across"
         exit 1
     fi
-    ssh cluster@192.168.0.$((100+$i+1)) "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf"
+    sudo -u user ssh cluster@192.168.0.$((100+$i+1)) "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf"
     eval "$client_pub_key$i=key"
     eval "$client_priv_key$i=key"
     unset client_pub_key$i
@@ -86,8 +86,8 @@ EOF
 done
 # copies server config file to main node
 echo "Copying config file to main node"
-scp $tmpdir/server_config.conf celebrimbor@192.168.0.100:/etc/wireguard/wg-cluster-unlock.conf 
-ssh celebrimbor@192.168.0.100 "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf"
+sudo -u user scp $tmpdir/server_config.conf celebrimbor@192.168.0.100:/etc/wireguard/wg-cluster-unlock.conf 
+sudo -u user ssh celebrimbor@192.168.0.100 "sudo chmod 600 /etc/wireguard/wg-cluster-unlock.conf"
 
 # security checks
 echo "Cleaning up temporary files"
