@@ -1,17 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
-# checks for root access
-echo "Checking for root access..."
-if [[ $EUID -ne 0 ]]; then                                   
-    echo "Must have root access to run"
-    exit 1
-fi
-echo "Root access has been confirmed"
-
 # Creating a secure environment
-tmpdir=$(mktemp -d /tmp/wireguard.XXXXXX)
-chmod 600 $tmpdir
+tmpdir=$(sudo mktemp -d /tmp/wireguard.XXXXXX)
+sudo chmod 700 $tmpdir
+sudo chown user:users $tmpdir
 trap "rm -rf $tmpdir" EXIT
 
 # checks that wireguard is installed
