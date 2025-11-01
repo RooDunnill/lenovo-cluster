@@ -83,7 +83,7 @@ EOF
     eval "$client_priv_key$i=key"
     unset client_pub_key$i
     unset client_priv_key$i
-
+done
 # copies server config file to main node
 echo "Copying config file to main node"
 scp $tmpdir/server_config.conf celebrimbor@192.168.0.100:/etc/wireguard/wg-cluster-unlock.conf 
@@ -98,4 +98,3 @@ unset server_pub_key
 unset server_priv_key
 
 echo "Complete!"
-
