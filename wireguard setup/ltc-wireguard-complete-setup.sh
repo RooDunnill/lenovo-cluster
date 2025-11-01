@@ -72,8 +72,6 @@ EOF
         exit 1
     fi
 
-    eval "$client_pub_key$i=key"
-    eval "$client_priv_key$i=key"
     unset client_pub_key$i
     unset client_priv_key$i
 done
