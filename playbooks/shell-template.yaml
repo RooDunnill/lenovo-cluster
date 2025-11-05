@@ -1,0 +1,17 @@
+---
+- name: Template for running shell scripts
+  hosts: nodesubgroup
+  become: yes
+
+  tasks:
+    #- name: Runs a simple shell scripts
+    #  command: ls /home/cluster
+
+    - name: Runs a more comprehensive shell scripts
+      shell: apt install console-setup
+      register: response
+
+    - name: Shows the Outcome of the Shell script
+      debug:
+        msg: "{{ response }}"
+

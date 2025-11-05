@@ -1,0 +1,14 @@
+---
+- name: Updates the Initramfs
+  hosts: nodesubgroup
+  become: yes
+
+  tasks:
+    - name: Runs the command to update
+      shell: update-initramfs -u
+      register: update_initramfs
+
+    - name: Shows the output of the command
+      debug:
+        msg: "{{ update_initramfs.stdout }}"
+

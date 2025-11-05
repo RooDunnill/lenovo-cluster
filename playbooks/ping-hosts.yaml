@@ -1,0 +1,16 @@
+---
+- name: Pings all the ltc nodes
+  hosts: nodesubgroup
+  become: no
+
+  tasks:
+    - name: Ping the target hosts
+      ansible.builtin.ping:
+
+    - name: Show the user executing the command
+      ansible.builtin.command: whoami
+      register: who
+
+    - name: Display current user
+      ansible.builtin.debug:
+        msg: "Ran as user: {{ who.stdout }}"
