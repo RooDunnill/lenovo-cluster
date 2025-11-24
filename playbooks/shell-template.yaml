@@ -8,7 +8,7 @@
     #  command: ls /home/cluster
 
     - name: Runs a more comprehensive shell scripts
-      shell: apt install console-setup
+      shell: systemctl restart NetworkManager
       register: response
 
     - name: Shows the Outcome of the Shell script

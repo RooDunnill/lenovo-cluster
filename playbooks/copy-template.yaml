@@ -1,0 +1,10 @@
+---
+- name: Template for copying files
+  hosts: nodesubgroup
+  become: yes
+
+  tasks:
+    - name: Copies a file from src to dest
+      ansible.builtin.copy:
+        src: /home/celebrimbor/projects/lenovo-cluster/config_files/NetworkManager.conf
+        dest: /etc/NetworkManager/NetworkManager.conf
